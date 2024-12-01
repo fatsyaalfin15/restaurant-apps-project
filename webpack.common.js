@@ -66,32 +66,10 @@ module.exports = {
       ],
       runtimeCaching: [
         {
-          urlPattern: ({ request }) => request.destination === 'image',
-          handler: 'CacheFirst',
-          options: {
-            cacheName: 'image-cache',
-            expiration: {
-              maxEntries: 60,
-              maxAgeSeconds: 30 * 24 * 60 * 60, // 30 hari
-            },
-          },
-        },
-        {
-          urlPattern: ({ request }) => request.destination === 'document',
-          handler: 'NetworkFirst',
-          options: {
-            cacheName: 'html-cache',
-            cacheableResponse: {
-              statuses: [0, 200],
-            },
-          },
-        },
-        {
-          urlPattern: ({ request }) =>
-            ['script', 'style', 'font'].includes(request.destination),
+          urlPattern: ({ url }) => url.href.startsWith('https://restaurant-api.dicoding.dev/'),
           handler: 'StaleWhileRevalidate',
           options: {
-            cacheName: 'static-resources',
+            cacheName: 'restaurantdb-api',
           },
         },
       ],
