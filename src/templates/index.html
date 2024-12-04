@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Restaurante - Best Restaurant Catalog</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-  <link rel="manifest" href="/manifest.json">
-  
+  <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
-  
-  <a href="#content" class="skip-link">Skip to Content</a>
+  <!-- Skip to Content -->
+  <a href="#content" class="skip-link" tabindex="0">Skip to Content</a>
 
+  <!-- Header -->
   <header class="app-bar">
     <div class="app-brand-container">
       <a href="/" class="app-brand">Restaurante</a>
@@ -30,16 +30,22 @@
     </nav>
   </header>
 
+  <!-- Hero Section -->
   <section class="hero">
     <img src="./images/heros/hero-image_4.jpg" alt="Restaurant-Food hero image">
   </section>
 
+  <!-- Main Content -->
   <main id="content" tabindex="-1">
+    <!-- Restaurant List Section -->
     <section id="restaurant-list" class="restaurant-list">
       <h2>Explore Restaurants</h2>
       <div id="restaurant-list-content"></div>
     </section>
 
+    <!-- Restaurant Detail Section -->
+    <a href="#content" class="skip-link" tabindex="0">Skip to Content</a>
+    <main id="content" tabindex="-1">
     <section id="restaurant-detail" class="restaurant-detail" style="display: none;">
       <h2 id="restaurant-name"></h2>
       <img id="restaurant-image" alt="Image of the restaurant">
@@ -55,30 +61,21 @@
       <button id="favorite-button">Add to Favorite</button>
     </section>
 
+    <!-- Favorite List Section -->
+    <a href="#content" class="skip-link" tabindex="0">Skip to Content</a>
+    <main id="content" tabindex="-1">
     <section id="favorite-list" class="favorite-list" style="display: none;">
       <h2>Your Favorite Restaurants</h2>
       <div id="favorite-list-content"></div>
     </section>
   </main>
 
+  <!-- Footer -->
   <footer class="footer">
     <p>&copy; 2024 - Restaurante. All Rights Reserved.</p>
   </footer>
 
   <div id="loading-indicator" style="display: none;">Loading...</div>
   <div id="error-message" style="display: none; color: red;"></div>
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-          .then(registration => {
-            console.log('Service Worker registered:', registration);
-          })
-          .catch(error => {
-            console.log('Service Worker registration failed:', error);
-          });
-      });
-    }
-  </script>
 </body>
 </html>
