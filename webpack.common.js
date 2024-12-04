@@ -11,6 +11,7 @@ module.exports = {
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
     clean: true,
   },
   module: {
@@ -57,7 +58,7 @@ module.exports = {
     }),
     new WorkboxWebpackPlugin.GenerateSW({
       swDest: './sw.bundle.js',
-      maximumFileSizeToCacheInBytes: 6 * 1024 * 1024, // 
+      maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
       include: [
         /\.html$/,
         /\.js$/,
@@ -87,6 +88,6 @@ module.exports = {
     },
     historyApiFallback: true,
     compress: true,
-    port: 9000,
+    port: 8080,
   },
 };
