@@ -25,7 +25,7 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.(png|jpg|jpeg|svg)$/i,
+        test: /\.(png|jpg|jpeg|svg|ico|webp)$/i, 
         type: 'asset/resource',
         generator: {
           filename: 'images/[name][ext]',
@@ -44,6 +44,7 @@ module.exports = {
     ],
   },
   plugins: [
+    
     new CopyWebpackPlugin({
       patterns: [
         {
@@ -52,18 +53,20 @@ module.exports = {
         },
       ],
     }),
+    
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: path.resolve(__dirname, 'src/templates/index.html'),
     }),
+    
     new WorkboxWebpackPlugin.GenerateSW({
       swDest: './sw.bundle.js',
-      maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
+      maximumFileSizeToCacheInBytes: 6 * 1024 * 1024, 
       include: [
         /\.html$/,
         /\.js$/,
         /\.css$/,
-        /\.(png|jpg|jpeg|svg)$/,
+        /\.(png|jpg|jpeg|svg|webp|ico)$/, 
       ],
       runtimeCaching: [
         {
@@ -71,6 +74,16 @@ module.exports = {
           handler: 'StaleWhileRevalidate',
           options: {
             cacheName: 'restaurantdb-api',
+          },
+        },
+        {
+          urlPattern: ({ url }) => url.pathname.startsWith('/images/icons/'),
+          handler: 'CacheFirst',
+          options: {
+            cacheName: 'icon-cache',
+            expiration: {
+              maxEntries: 10, 
+            },
           },
         },
       ],
