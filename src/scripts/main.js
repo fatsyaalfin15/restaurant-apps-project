@@ -17,6 +17,7 @@ const swRegister = async () => {
 };
 
 document.addEventListener('DOMContentLoaded', () => {
+
   const hamburger = document.querySelector('.hamburger');
   const navMenu = document.querySelector('.nav-menu');
   const closeBtn = document.querySelector('.close-btn');
@@ -221,12 +222,18 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('hashchange', () => {
     const hash = window.location.hash;
     if (hash.startsWith('#details=')) {
-      displayRestaurantDetails(hash.split('=')[1]);
+        displayRestaurantDetails(hash.split('=')[1]);
     } else {
-      navigateTo(hash);
+        navigateTo(hash);
     }
+    const skipLinkElem = document.querySelector('.skip-link');    
+    skipLinkElem.addEventListener('click', (event) => {      
+        event.preventDefault();
+        document.querySelector('#content').scrollIntoView();
+        skipLinkElem.blur();
   });
-
+});
+  
   fetchRestaurants();
 
   window.displayRestaurantDetails = displayRestaurantDetails;
