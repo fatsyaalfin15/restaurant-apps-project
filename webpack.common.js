@@ -2,6 +2,15 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WorkboxWebpackPlugin = require('workbox-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ImageminWebpackPlugin = require('imagemin-webpack-plugin').default;
+
+// Menggunakan import dinamis untuk ImageminMozjpeg
+const ImageminMozjpeg = async () => {
+  const mozjpeg = await import('imagemin-mozjpeg');
+  return mozjpeg.default;
+};
+
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = {
   mode: 'production',
@@ -11,6 +20,7 @@ module.exports = {
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/',
     clean: true,
   },
   module: {
@@ -24,11 +34,16 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.(png|jpg|jpeg|svg)$/i,
+        test: /\.(png|jpg|jpeg|svg|ico|webp)$/i, 
         type: 'asset/resource',
         generator: {
           filename: 'images/[name][ext]',
         },
+        parser: {
+          dataUrlCondition: {
+            maxSize: 8 * 1024 // 8kb
+          }
+        } 
       },
       {
         test: /\.js$/i,
@@ -51,47 +66,45 @@ module.exports = {
         },
       ],
     }),
+    new ImageminWebpackPlugin({
+      plugins: [
+        ImageminMozjpeg({
+          quality: 50, 
+          progressive: true,
+        }),
+      ],
+    }),
+    new BundleAnalyzerPlugin(),
     new HtmlWebpackPlugin({
       filename: 'index.html',
+      favicon: './src/public/images/favicon.png', 
       template: path.resolve(__dirname, 'src/templates/index.html'),
     }),
     new WorkboxWebpackPlugin.GenerateSW({
       swDest: './sw.bundle.js',
-      maximumFileSizeToCacheInBytes: 6 * 1024 * 1024, // 
+      maximumFileSizeToCacheInBytes: 6 * 1024 * 1024, 
       include: [
         /\.html$/,
         /\.js$/,
         /\.css$/,
-        /\.(png|jpg|jpeg|svg)$/,
+        /\.(png|jpg|jpeg|svg|webp|ico)$/, 
       ],
       runtimeCaching: [
         {
-          urlPattern: ({ request }) => request.destination === 'image',
-          handler: 'CacheFirst',
-          options: {
-            cacheName: 'image-cache',
-            expiration: {
-              maxEntries: 60,
-              maxAgeSeconds: 30 * 24 * 60 * 60, // 30 hari
-            },
-          },
-        },
-        {
-          urlPattern: ({ request }) => request.destination === 'document',
-          handler: 'NetworkFirst',
-          options: {
-            cacheName: 'html-cache',
-            cacheableResponse: {
-              statuses: [0, 200],
-            },
-          },
-        },
-        {
-          urlPattern: ({ request }) =>
-            ['script', 'style', 'font'].includes(request.destination),
+          urlPattern: ({ url }) => url.href.startsWith('https://restaurant-api.dicoding.dev/'),
           handler: 'StaleWhileRevalidate',
           options: {
-            cacheName: 'static-resources',
+            cacheName: 'restaurantdb-api',
+          },
+        },
+        {
+          urlPattern: ({ url }) => url.pathname.startsWith('/images/icons/'),
+          handler: 'CacheFirst',
+          options: {
+            cacheName: 'icon-cache',
+            expiration: {
+              maxEntries: 10, 
+            },
           },
         },
       ],
@@ -109,6 +122,6 @@ module.exports = {
     },
     historyApiFallback: true,
     compress: true,
-    port: 9000,
+    port: 8080,
   },
 };

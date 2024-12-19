@@ -3,16 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#00DB00"/>
   <title>Restaurante - Best Restaurant Catalog</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
-  <link rel="manifest" href="/manifest.json">
-  
+  <link rel="icon" href="/images/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="/images/icons/icon-192x192.png">
+  <link rel="manifest" href="manifest.json">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js"></script>
 </head>
-
+ 
 <body>
-  
-  <a href="#content" class="skip-link">Skip to Content</a>
+  <!-- Skip to Content -->
+  <a href="#content" class="skip-link" tabindex="0">Skip to Content</a>
 
+  <!-- Header -->
   <header class="app-bar">
     <div class="app-brand-container">
       <a href="/" class="app-brand">Restaurante</a>
@@ -31,15 +35,23 @@
   </header>
 
   <section class="hero">
-    <img src="./images/heros/hero-image_4.jpg" alt="Restaurant-Food hero image">
+    <picture>
+      <source media="(max-width: 600px)" srcset="./images/heros/hero-image_4-small.jpg">
+      <source media="(min-width: 601px) and (max-width: 1000px)" srcset="./images/heros/hero-image_4-medium.jpg">
+      <source media="(min-width: 1001px)" srcset="./images/heros/hero-image_4.jpg">
+      <img src="./images/heros/hero-image_4.jpg" alt="Restaurant Hero Image">
+    </picture>
   </section>
-
+  
+  <!-- Main Content -->
   <main id="content" tabindex="-1">
+    <!-- Restaurant List Section -->
     <section id="restaurant-list" class="restaurant-list">
       <h2>Explore Restaurants</h2>
       <div id="restaurant-list-content"></div>
     </section>
 
+    <!-- Restaurant Detail Section -->
     <section id="restaurant-detail" class="restaurant-detail" style="display: none;">
       <h2 id="restaurant-name"></h2>
       <img id="restaurant-image" alt="Image of the restaurant">
@@ -55,30 +67,20 @@
       <button id="favorite-button">Add to Favorite</button>
     </section>
 
+    <!-- Favorite List Section -->
     <section id="favorite-list" class="favorite-list" style="display: none;">
       <h2>Your Favorite Restaurants</h2>
       <div id="favorite-list-content"></div>
     </section>
   </main>
 
+  <!-- Footer -->
   <footer class="footer">
     <p>&copy; 2024 - Restaurante. All Rights Reserved.</p>
   </footer>
 
   <div id="loading-indicator" style="display: none;">Loading...</div>
   <div id="error-message" style="display: none; color: red;"></div>
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/service-worker.js')
-          .then(registration => {
-            console.log('Service Worker registered:', registration);
-          })
-          .catch(error => {
-            console.log('Service Worker registration failed:', error);
-          });
-      });
-    }
-  </script>
+
 </body>
 </html>

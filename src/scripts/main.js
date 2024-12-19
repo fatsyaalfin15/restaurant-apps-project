@@ -1,7 +1,24 @@
 import { openDB } from 'idb';
 import { navigateTo } from './router.js';
+import { Workbox } from 'workbox-window';
+
+
+const swRegister = async () => {
+  if (!('serviceWorker' in navigator)) {
+    console.log('Service Worker not supported in the browser');
+    return;
+  }
+  const wb = new Workbox('./sw.bundle.js');
+  try {
+    await wb.register();
+    console.log('Service worker registered');
+  } catch (error) {
+    console.log('Failed to register service worker', error);
+  }
+};
 
 document.addEventListener('DOMContentLoaded', () => {
+
   const hamburger = document.querySelector('.hamburger');
   const navMenu = document.querySelector('.nav-menu');
   const closeBtn = document.querySelector('.close-btn');
@@ -40,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     navMenu.setAttribute('aria-hidden', 'true');
   });
 
+
   function showSection(sectionId) {
     document.getElementById('restaurant-list').style.display = 'none';
     document.getElementById('restaurant-detail').style.display = 'none';
@@ -48,7 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const section = document.getElementById(sectionId);
     section.style.display = 'block';
 
+
     section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('content').focus();
   }
   window.showSection = showSection;
 
@@ -107,7 +127,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const restaurantListContent = document.getElementById('restaurant-list-content');
     restaurantListContent.innerHTML = restaurants.map((restaurant) => `
       <article class="restaurant-card" tabindex="0">
-        <img src="https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId}" alt="${restaurant.name}">
+        <img data-src="https://restaurant-api.dicoding.dev/images/medium/${restaurant.pictureId}" alt="${restaurant.name}" class="lazyload">
         <h3>${restaurant.name}</h3>
         <p>City: ${restaurant.city}</p>
         <p>Rating: ${restaurant.rating}</p>
@@ -197,6 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       navigateTo(currentHash);
     }
+    swRegister();
   });
 
   window.addEventListener('hashchange', () => {
@@ -206,6 +227,12 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       navigateTo(hash);
     }
+    const skipLinkElem = document.querySelector('.skip-link');
+    skipLinkElem.addEventListener('click', (event) => {
+      event.preventDefault();
+      document.querySelector('#content').scrollIntoView();
+      skipLinkElem.blur();
+    });
   });
 
   fetchRestaurants();

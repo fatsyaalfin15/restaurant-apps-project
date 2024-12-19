@@ -120,17 +120,37 @@ a, input, button, textarea {
   }
 }
 
+/* Hero Section */
 .hero {
   padding-top: 6rem;
-
-  img {
-    width: 100%;
-    max-height: 450px;
-    object-fit: cover;
-  }
-
   padding-bottom: 2rem;
 }
+
+.hero img {
+  width: 100%;
+  height: auto; /* Menjaga proporsi gambar */
+  object-fit: cover;
+}
+
+/* Responsiveness */
+@media screen and (max-width: 600px) {
+  .hero img {
+    max-height: 350px; /* Maksimal tinggi untuk layar kecil */
+  }
+}
+
+@media screen and (min-width: 601px) and (max-width: 1000px) {
+  .hero img {
+    max-height: 450px; /* Maksimal tinggi untuk layar sedang */
+  }
+}
+
+@media screen and (min-width: 1001px) {
+  .hero img {
+    max-height: 500px; /* Maksimal tinggi untuk layar besar */
+  }
+}
+
 
 .reviews {
   padding: 15px;

@@ -1,0 +1,57 @@
+ad21869dac36ce339e55bf1851f896ac
+/* istanbul ignore next */
+function cov_2utvakbfi() {
+  var path = "C:\\restaurant-apps-starter-project\\src\\scripts\\index.js";
+  var hash = "74c66d445265789a9ad6ab66f8e5d0f870f723fe";
+  var global = new Function("return this")();
+  var gcv = "__coverage__";
+  var coverageData = {
+    path: "C:\\restaurant-apps-starter-project\\src\\scripts\\index.js",
+    statementMap: {
+      "0": {
+        start: {
+          line: 7,
+          column: 0
+        },
+        end: {
+          line: 7,
+          column: 32
+        }
+      }
+    },
+    fnMap: {},
+    branchMap: {},
+    s: {
+      "0": 0
+    },
+    f: {},
+    b: {},
+    _coverageSchema: "1a1c01bbd47fc00a2c39e90264f33305004495a9",
+    hash: "74c66d445265789a9ad6ab66f8e5d0f870f723fe"
+  };
+  var coverage = global[gcv] || (global[gcv] = {});
+  if (!coverage[path] || coverage[path].hash !== hash) {
+    coverage[path] = coverageData;
+  }
+  var actualCoverage = coverage[path];
+  {
+    // @ts-ignore
+    cov_2utvakbfi = function () {
+      return actualCoverage;
+    };
+  }
+  return actualCoverage;
+}
+cov_2utvakbfi();
+import 'regenerator-runtime'; /* for async await transpile */
+import
+/* istanbul ignore next */
+"../scripts/main.js";
+import
+/* istanbul ignore next */
+"../styles/main.scss";
+import 'lazysizes';
+/* istanbul ignore next */
+cov_2utvakbfi().s[0]++;
+console.log('Hello Coders! :)');
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJuYW1lcyI6WyJjb3ZfMnV0dmFrYmZpIiwiYWN0dWFsQ292ZXJhZ2UiLCJzIiwiY29uc29sZSIsImxvZyJdLCJzb3VyY2VzIjpbImluZGV4LmpzIl0sInNvdXJjZXNDb250ZW50IjpbImltcG9ydCAncmVnZW5lcmF0b3ItcnVudGltZSc7IC8qIGZvciBhc3luYyBhd2FpdCB0cmFuc3BpbGUgKi9cbmltcG9ydCAnLi4vc2NyaXB0cy9tYWluLmpzJztcbmltcG9ydCAnLi4vc3R5bGVzL21haW4uc2Nzcyc7XG5pbXBvcnQgJ2xhenlzaXplcyc7XG5cblxuY29uc29sZS5sb2coJ0hlbGxvIENvZGVycyEgOiknKTtcbiJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0lBZVk7SUFBQUEsYUFBQSxZQUFBQSxDQUFBO01BQUEsT0FBQUMsY0FBQTtJQUFBO0VBQUE7RUFBQSxPQUFBQSxjQUFBO0FBQUE7QUFBQUQsYUFBQTtBQWZaLE9BQU8scUJBQXFCLENBQUMsQ0FBQztBQUM5QjtBQUFBO0FBQUE7QUFDQTtBQUFBO0FBQUE7QUFDQSxPQUFPLFdBQVc7QUFBQztBQUFBQSxhQUFBLEdBQUFFLENBQUE7QUFHbkJDLE9BQU8sQ0FBQ0MsR0FBRyxDQUFDLGtCQUFrQixDQUFDIiwiaWdub3JlTGlzdCI6W119
