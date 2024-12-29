@@ -238,6 +238,21 @@ h2 {
   color: #555;
 }
 
+#restaurant-image {
+  display: block;
+  margin: 20px auto;
+  width: 60%;
+  height: auto;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  #restaurant-image {
+    width: 100%;
+    height: auto; 
+  }
+}
+
 .restaurant-detail {
   text-align: center;
   color: black;
