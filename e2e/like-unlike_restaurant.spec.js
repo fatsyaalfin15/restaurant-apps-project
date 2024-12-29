@@ -1,62 +1,44 @@
-Feature('Liking and Unliking Restaurants');
+Feature('Restaurant Application');
 
 Before(({ I }) => {
-  I.amOnPage('/');
+ I.amOnPage('/');
 });
 
 Scenario('liking and unliking a restaurant', async ({ I }) => {
-  
-  I.see('Explore Restaurants');
-  I.waitForElement('#restaurant-list', 10);
-  I.waitForElement('#restaurant-list-content', 10);
-  
-  I.waitForFunction(() => {
-    return document.querySelector('#restaurant-list-content').children.length > 0
-  }, 10);
+ // Verifikasi halaman utama dan tunggu konten load
+ I.waitForElement('#restaurant-list-content', 20);
+ I.see('Explore Restaurants');
 
-  const firstRestaurantLink = locate('#restaurant-list-content a').first();
-  I.waitForElement(firstRestaurantLink, 10);
-  const restaurantTitle = await I.grabTextFrom(firstRestaurantLink);
-  I.click(firstRestaurantLink);
+ // Klik restoran pertama
+ I.waitForClickable('#restaurant-list-content .cta', 20);
+ const restaurantTitle = await I.grabTextFrom('#restaurant-list-content .cta');
+ I.click('#restaurant-list-content .cta');
 
-  I.waitForElement('#restaurant-detail', 10);
-  I.seeElement('#restaurant-name');
-  
-  I.waitForElement('#favorite-button', 10);
-  I.click('#favorite-button');
-  
-  
-  I.click('Favorite');
-  I.waitForElement('#favorite-list', 10);
-  I.see('Your Favorite Restaurants');
-  
-  
-  I.waitForElement('#favorite-list-content', 10);
-  I.waitForFunction(() => {
-    return document.querySelector('#favorite-list-content').children.length > 0
-  }, 10);
-  I.see(restaurantTitle);
-  
-  // Click the favorited restaurant
-  I.click(locate('#favorite-list-content a').first());
-  
-  // Unlike the restaurant
-  I.waitForElement('#favorite-button', 10);
-  I.click('#favorite-button');
-  
-  // Return to favorites page
-  I.click('Favorite');
-  I.waitForElement('#favorite-list', 10);
-  
-  // Verify restaurant is no longer in favorites
-  I.dontSee(restaurantTitle);
+ // Like restoran
+ I.waitForClickable('#likeButton', 20);
+ I.click('#likeButton');
+
+ // Pergi ke halaman favorit
+ I.amOnPage('/#/favorite');
+ I.waitForElement('#favorite-list-content', 20); 
+ I.see(restaurantTitle);
+
+ // Unlike restoran
+ I.waitForClickable('#favorite-list-content .cta', 20);
+ I.click('#favorite-list-content .cta');
+
+ I.waitForClickable('#likeButton', 20);
+ I.click('#likeButton');
+
+ // Verifikasi restoran dihapus dari favorit
+ I.amOnPage('/#/favorite');
+ I.waitForElement('#favorite-list-content', 20);
+ I.dontSee(restaurantTitle);
 });
 
-// Additional helper scenario to verify initial state
-Scenario('showing empty favorite restaurants', async ({ I }) => {
-  I.click('Favorite');
-  I.waitForElement('#favorite-list', 10);
-  I.see('Your Favorite Restaurants');
-  I.waitForElement('#favorite-list-content', 10);
-  I.dontSeeElement(locate('#favorite-list-content a'));
+Scenario('showing empty favorite restaurants', ({ I }) => {
+ I.amOnPage('/#/favorite');
+ I.waitForElement('#favorite-list-content', 20);
+ I.see('Your Favorite Restaurants');
+ I.see('You have no favorite restaurants yet.', '#favorite-list-content');
 });
