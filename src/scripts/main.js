@@ -48,36 +48,24 @@ document.addEventListener('DOMContentLoaded', () => {
   swRegister();
   
   const hamburger = document.querySelector('.hamburger');
-  const navBar = document.querySelector('#navigation');
+  const navMenu = document.querySelector('.nav-menu');
   const closeBtn = document.querySelector('.close-btn');
+  const loadingIndicator = document.createElement('div');
+  loadingIndicator.classList.add('loading-indicator');
+  document.body.appendChild(loadingIndicator);
 
   hamburger.addEventListener('click', () => {
-    navBar.classList.add('active');  
-    hamburger.setAttribute('aria-expanded', 'true');  
+    const expanded = hamburger.getAttribute('aria-expanded') === 'true';
+    hamburger.setAttribute('aria-expanded', !expanded);
+    navMenu.classList.toggle('open');
+    navMenu.style.transform = expanded ? 'translateX(100%)' : 'translateX(0)';
   });
 
   closeBtn.addEventListener('click', () => {
-    navBar.classList.remove('active'); 
-    hamburger.setAttribute('aria-expanded', 'false');  
+    hamburger.setAttribute('aria-expanded', 'false');
+    navMenu.style.transform = 'translateX(100%)';
+    navMenu.setAttribute('aria-hidden', 'true');
   });
-
-  navBar.addEventListener('click', (event) => {
-    if (event.target.tagName === 'A') {
-      navBar.classList.remove('active');
-      hamburger.setAttribute('aria-expanded', 'false');
-    }
-  });
-
-  document.addEventListener('click', (event) => {
-    if (
-      !navBar.contains(event.target) &&
-      !hamburger.contains(event.target)
-    ) {
-      navBar.classList.remove('active');
-      hamburger.setAttribute('aria-expanded', 'false');
-    }
-  });
-
 
   const skipLinkElem = document.querySelector('.skip-link');
   skipLinkElem.addEventListener('click', (event) => {
